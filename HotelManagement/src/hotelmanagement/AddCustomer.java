@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.util.Date;
+//import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AddCustomer extends JFrame implements ActionListener{
     
@@ -106,9 +108,13 @@ public class AddCustomer extends JFrame implements ActionListener{
         lbltime.setFont(new Font("serif",Font.PLAIN,20));
         add(lbltime);
         
-        Date date = new Date();
-        
-        checkintime = new JLabel("" + date);
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+        String formattedDate = date.format(myFormatObj);
+
+
+        checkintime = new JLabel("" + formattedDate);
         checkintime.setBounds(200,320,250,25);
         checkintime.setFont(new Font("serif",Font.PLAIN,20));
         add(checkintime);
@@ -141,7 +147,7 @@ public class AddCustomer extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent ae){
         if (ae.getSource() == add){
-            String id = (String) comboid.getSelectedItem();
+            String id_type = (String) comboid.getSelectedItem();
             String number = tfnumber.getText();
             String name = tfname.getText();
             String gender = null;
@@ -154,16 +160,16 @@ public class AddCustomer extends JFrame implements ActionListener{
             String room = croom.getSelectedItem();
             String checkin_time = checkintime.getText();
             
-            if  (id.equals("")){
+            if  (id_type.equals("")){
                 JOptionPane.showMessageDialog(null,"id_type should not be empty");
             return;
-        }
+            }
             try{
                 Conn conn = new Conn();
-                String query = "insert into customer values('"+id+"','"+number+"','"+name+"','"+gender+"','"+country+"','"+room+"','"+checkin_time+"','"+null+"')";
+                String query = "insert into customer values('"+id_type+"','"+number+"','"+name+"','"+gender+"','"+country+"','"+room+"','"+checkin_time+"','"+null+"')";
                 String query2 = "update room set availability = 'Occupied',user_id = '"+number+"',user_name='"+name+"' where room_number = '"+room+"'  ";
                 String query3 = "insert into invoice(user_name,user_id,room_number,checkin_time)"
-                        + "values('"+name+"','"+id+"','"+room+"','"+checkin_time+"') ";
+                        + "values('"+name+"','"+number+"','"+room+"','"+checkin_time+"') ";
                 
                 conn.s.executeUpdate(query);
                 conn.s.executeUpdate(query2);
