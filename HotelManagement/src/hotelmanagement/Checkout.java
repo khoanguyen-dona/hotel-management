@@ -90,7 +90,7 @@ public class Checkout extends JFrame implements ActionListener {
         time_stay.setBounds(150,430,200,30);
         add(time_stay);
               
-        JLabel lbltotalprice = new JLabel("Total price");
+        JLabel lbltotalprice = new JLabel("Total price (VNĐ)");
         lbltotalprice.setBounds(30,480,150,30);
         add(lbltotalprice);     
         total_price = new JLabel();
@@ -203,8 +203,21 @@ public class Checkout extends JFrame implements ActionListener {
                 String my_time_stay = difference_In_Days+" days, "+difference_In_Hours+" hours, "+difference_In_Minutes+" minutes.";
                 time_stay.setText(my_time_stay);
                 int my_room_price = Integer.parseInt(room_price.getText());
-                int my_total_price= (int) ((1+difference_In_Days)*my_room_price);
-                total_price.setText(String.valueOf(my_total_price));
+
+                if(difference_In_Days >=1 ) {
+                    int my_total_price = (int) ((1 + difference_In_Days) * my_room_price);
+                    total_price.setText(String.valueOf(my_total_price));
+                }
+                if(difference_In_Days == 0 ) {
+                    if (difference_In_Hours < 2 ) {
+                        int my_total_price = (int) (0.4 * my_room_price);
+                        total_price.setText(String.valueOf(my_total_price));
+                    }
+                    else{
+                        int my_total_price = (int) ((1 + difference_In_Days) * my_room_price);
+                        total_price.setText(String.valueOf(my_total_price));
+                    }
+                }
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -218,7 +231,7 @@ public class Checkout extends JFrame implements ActionListener {
             String q_total_price=total_price.getText();
             String q_time_stay=time_stay.getText();
             try {
-                System.out.println("check in time la "+checkin_time);
+                System.out.println("check in time la "+checkin_time.getText());
                 System.out.println("check out time la "+checkout_time);
                 System.out.println("room chosen  la "+room_chosen);
                 System.out.println("customer_number  la "+customer_number);
