@@ -25,7 +25,7 @@ public class Reception extends JFrame implements ActionListener{
         newCustomer.addActionListener(this);
         add(newCustomer);
         
-        customerInfo = new JButton("Customer");
+        customerInfo = new JButton("Customers");
         customerInfo.setBounds(30,110,200,30);
         customerInfo.setBackground(Color.BLACK);
         customerInfo.setForeground(Color.WHITE);
@@ -108,7 +108,7 @@ public class Reception extends JFrame implements ActionListener{
         lbl_invoice.setBounds(380,300,200,30);
         add(lbl_invoice);
 
-        viewInvoice = new JButton("Invoice");
+        viewInvoice = new JButton("Invoices");
         viewInvoice.setBounds(300,350,200,30);
         viewInvoice.setBackground(Color.BLACK);
         viewInvoice.setForeground(Color.WHITE);
