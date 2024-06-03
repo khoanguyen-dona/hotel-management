@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class AddCustomer extends JFrame implements ActionListener{
     
     JComboBox comboid;
-    JTextField tfnumber,tfname,tfcountry;
+    JTextField tfnumber,tfname,tfcountry,tfroom_type;
     JRadioButton rmale,rfemale;
     Choice croom;
     JLabel checkintime;
@@ -83,6 +83,10 @@ public class AddCustomer extends JFrame implements ActionListener{
         tfcountry = new JTextField();
         tfcountry.setBounds(200,240,150,25);
         add(tfcountry);
+
+        tfroom_type = new JTextField();
+        tfroom_type.setBounds(200,240,150,25);
+        add(tfroom_type);
         
         JLabel lblroom = new JLabel("Room Number");
         lblroom.setBounds(35,280,150,25);
@@ -151,6 +155,7 @@ public class AddCustomer extends JFrame implements ActionListener{
             String number = tfnumber.getText();
             String name = tfname.getText();
             String gender = null;
+
             if(rmale.isSelected()){
                 gender = "Male";
             }else if (rfemale.isSelected()){
@@ -159,7 +164,22 @@ public class AddCustomer extends JFrame implements ActionListener{
             String country = tfcountry.getText();
             String room = croom.getSelectedItem();
             String checkin_time = checkintime.getText();
-            
+
+            try{
+                Conn conn = new Conn();
+                String query0 = "select bed_type from room where room_number = '"+room+"' ";
+                ResultSet rs1 = conn.s.executeQuery(query0);
+
+                while(rs1.next()){
+
+                    tfroom_type.setText(rs1.getString("bed_type"));
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            String bed_type = tfroom_type.getText();
+
             if  (id_type.equals("")){
                 JOptionPane.showMessageDialog(null,"id_type should not be empty");
             return;
@@ -168,8 +188,8 @@ public class AddCustomer extends JFrame implements ActionListener{
                 Conn conn = new Conn();
                 String query = "insert into customer values('"+id_type+"','"+number+"','"+name+"','"+gender+"','"+country+"','"+room+"','"+checkin_time+"','"+null+"')";
                 String query2 = "update room set availability = 'Occupied',user_id = '"+number+"',user_name='"+name+"' where room_number = '"+room+"'  ";
-                String query3 = "insert into invoice(user_name,user_id,room_number,checkin_time)"
-                        + "values('"+name+"','"+number+"','"+room+"','"+checkin_time+"') ";
+                String query3 = "insert into invoice(user_name,user_id,room_number,room_type,checkin_time)"
+                        + "values('"+name+"','"+number+"','"+room+"','"+bed_type+"','"+checkin_time+"') ";
                 
                 conn.s.executeUpdate(query);
                 conn.s.executeUpdate(query2);

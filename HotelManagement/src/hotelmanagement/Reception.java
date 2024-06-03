@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class Reception extends JFrame implements ActionListener{
     
-    JButton newCustomer,rooms,allEmployee,customerInfo,searchRoom,updateCustomer,updateRoom,checkout,addRoom,logout,addEmployee;
+    JButton newCustomer,rooms,allEmployee,customerInfo,searchRoom,updateCustomer,updateRoom,checkout,addRoom,logout,addEmployee,viewInvoice;
     Reception () {
         
         setLayout(null);
@@ -101,6 +101,19 @@ public class Reception extends JFrame implements ActionListener{
         addEmployee.setForeground(Color.WHITE);
         addEmployee.addActionListener(this);
         add(addEmployee);
+
+        JLabel lbl_invoice = new JLabel("Invoice");
+        lbl_invoice.setFont(new Font("serif",Font.PLAIN,20));
+        lbl_invoice.setForeground(Color.white);
+        lbl_invoice.setBounds(380,300,200,30);
+        add(lbl_invoice);
+
+        viewInvoice = new JButton("Invoice");
+        viewInvoice.setBounds(300,350,200,30);
+        viewInvoice.setBackground(Color.BLACK);
+        viewInvoice.setForeground(Color.WHITE);
+        viewInvoice.addActionListener(this);
+        add(viewInvoice);
       
  
         
@@ -160,6 +173,9 @@ public class Reception extends JFrame implements ActionListener{
         }else if (ae.getSource() == addEmployee){
             setVisible(false);
             new AddEmployee();
+        }else if (ae.getSource() == viewInvoice) {
+            setVisible(false);
+            new Invoice();
         }
     }
     
