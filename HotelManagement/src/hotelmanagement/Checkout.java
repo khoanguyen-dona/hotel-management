@@ -16,12 +16,18 @@ import java.time.format.DateTimeFormatter;
 public class Checkout extends JFrame implements ActionListener {
     Choice croom;
     JLabel checkin_time,customer_id,customer_name,room_price,time_stay,total_price,lbl_checkout_time,bed_type;
-    
-    JButton checkout,back,check;
+    JTextArea invoice;
+    JButton checkout,back,check,print;
     Checkout() {
-        setBounds(300,200,400,650);
+        setBounds(300,200,800,650);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+
+        invoice = new JTextArea();
+        invoice.setBounds(400,50,300,450);
+        add(invoice);
+
+
         
         JLabel lblCheckout = new JLabel("Checkout");
         lblCheckout.setBounds(30,20,100,30);
@@ -117,6 +123,15 @@ public class Checkout extends JFrame implements ActionListener {
         back.setBounds(240,530,90,30);
         back.addActionListener(this);
         add(back);
+
+        print = new JButton("Print");
+        print.setBackground(Color.BLACK);
+        print.setForeground(Color.WHITE);
+        print.setBounds(500,530,90,30);
+        print.addActionListener(this);
+        add(print);
+
+
         
          try{
             Conn c = new Conn();
@@ -138,6 +153,9 @@ public class Checkout extends JFrame implements ActionListener {
     
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == check) {
+
+
+
             String room_number = croom.getSelectedItem();
             try {
                 Conn c = new Conn();
@@ -157,6 +175,8 @@ public class Checkout extends JFrame implements ActionListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String s_time_stay = null;
@@ -187,6 +207,16 @@ public class Checkout extends JFrame implements ActionListener {
                         % 365;
 
 
+                int days;int hours;int mins;
+                days = (int) (difference_In_Hours / 24);
+                if (difference_In_Hours <24){
+                    hours = (int) difference_In_Hours;
+                }else{
+                    hours = (int) (difference_In_Hours % 24);
+                }
+
+                mins = (int) (difference_In_Minutes % 60);
+
                 System.out.print(
                         "Difference"
                                 + " between two dates is: ");
@@ -200,7 +230,7 @@ public class Checkout extends JFrame implements ActionListener {
                                 + difference_In_Minutes
                                 + " minutes, ");
 
-                String my_time_stay = difference_In_Days+" days, "+difference_In_Hours+" hours, "+difference_In_Minutes+" minutes.";
+                String my_time_stay = days+" days, "+hours+" hours, "+mins+" minutes.";
                 time_stay.setText(my_time_stay);
                 int my_room_price = Integer.parseInt(room_price.getText());
 
@@ -251,17 +281,43 @@ public class Checkout extends JFrame implements ActionListener {
 
 
                 JOptionPane.showMessageDialog(null, "Checkout done");
-                setVisible(false);
-                new Reception();
+//                setVisible(false);
+//                new Reception();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
+
+            invoice.setText("***************************************************\n");
+            invoice.setText(invoice.getText()+"                 Hóa đơn\n");
+            invoice.setText(invoice.getText()+"-----------------------------------\n\n");
+            invoice.setText(invoice.getText()+lbl_checkout_time.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"ID khách hàng : "+customer_id.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Họ tên khách hàng: "+customer_name.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Đơn giá : "+room_price.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Loại phòng : "+bed_type.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Checkin lúc : "+checkin_time.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Checkout lúc : "+lbl_checkout_time.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Thời gian dùng : "+time_stay.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"Số tiền phải trả : "+total_price.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"***************************************************\n\n");
+            invoice.setText(invoice.getText()+"          Cảm ơn quý khách\n\n");
+            invoice.setText(invoice.getText()+"Pharaon Hotel 100 Lê Hồng Phong,q10,TP.HCM\n\n");
+
+
+
         } else if (ae.getSource() == back){
                 setVisible(false);
                 new Reception();
+        } else if (ae.getSource() == print){
+                try{
+                    invoice.print();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
+
     }
 
 

@@ -85,6 +85,7 @@ public class AddCustomer extends JFrame implements ActionListener{
         add(tfcountry);
 
         tfroom_type = new JTextField();
+        tfroom_type.setVisible(false);
         tfroom_type.setBounds(200,240,150,25);
         add(tfroom_type);
         
