@@ -290,9 +290,8 @@ public class Checkout extends JFrame implements ActionListener {
 
 
             invoice.setText("***************************************************\n");
-            invoice.setText(invoice.getText()+"                 Hóa đơn\n");
-            invoice.setText(invoice.getText()+"-----------------------------------\n\n");
-            invoice.setText(invoice.getText()+lbl_checkout_time.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"                             Hóa đơn\n");
+            invoice.setText(invoice.getText()+"                 -----------------------------------\n\n");
             invoice.setText(invoice.getText()+"ID khách hàng : "+customer_id.getText()+"\n\n");
             invoice.setText(invoice.getText()+"Họ tên khách hàng: "+customer_name.getText()+"\n\n");
             invoice.setText(invoice.getText()+"Đơn giá : "+room_price.getText()+"\n\n");
@@ -301,8 +300,9 @@ public class Checkout extends JFrame implements ActionListener {
             invoice.setText(invoice.getText()+"Checkout lúc : "+lbl_checkout_time.getText()+"\n\n");
             invoice.setText(invoice.getText()+"Thời gian dùng : "+time_stay.getText()+"\n\n");
             invoice.setText(invoice.getText()+"Số tiền phải trả : "+total_price.getText()+"\n\n");
+            invoice.setText(invoice.getText()+"                        "+lbl_checkout_time.getText()+"\n\n");
             invoice.setText(invoice.getText()+"***************************************************\n\n");
-            invoice.setText(invoice.getText()+"          Cảm ơn quý khách\n\n");
+            invoice.setText(invoice.getText()+"                      Cảm ơn quý khách\n\n");
             invoice.setText(invoice.getText()+"Pharaon Hotel 100 Lê Hồng Phong,q10,TP.HCM\n\n");
 
 
